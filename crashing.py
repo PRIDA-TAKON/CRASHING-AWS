@@ -373,7 +373,9 @@ def DRAW2(df):
     pos = nx.kamada_kawai_layout(G, dist=dist, scale=5)# เพิ่ม scale เพื่อขยายกราฟ
 
     # ค้นหาตำแหน่ง X ที่เหมาะสม
- 
+     x_positions = [pos[node][0] for node in G.nodes() if node not in ('START', 'END')]
+    avg_x = sum(x_positions) / len(x_positions) if x_positions else 0  # หากไม่มีโหนดอื่น ให้ x เป็น 0
+
     global node_positions  # อ้างอิงตัวแปร global
     node_positions = pos  # เก็บค่าตำแหน่งของโหนด
 

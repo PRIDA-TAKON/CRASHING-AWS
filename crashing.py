@@ -302,8 +302,12 @@ def DRAW(df):
 
     #หาลำดับชั้นของโหนด
     sorted_nodes = list(nx.algorithms.dag.topological_sort(G))
-    # เพื่อจัดวางกราฟ
+
+
+
+    # จัดวางกราฟ
     pos = nx.kamada_kawai_layout(G, dist=dist, scale=5)# เพิ่ม scale เพื่อขยายกราฟ
+
 
     # ค้นหาตำแหน่ง X ที่เหมาะสม
     x_positions = [pos[node][0] for node in G.nodes() if node not in ('START', 'END')]
@@ -311,6 +315,7 @@ def DRAW(df):
 
     global node_positions  # อ้างอิงตัวแปร global
     node_positions = pos  # เก็บค่าตำแหน่งของโหนด
+
 
     # สีโหนด
     node_colors =  ['red' if node in critical_path or node == 'END' else 'lightblue' for node in G.nodes()]
@@ -336,6 +341,7 @@ def DRAW(df):
     ax.axis('off')
 
 # สร้างกราฟที่ crashing แล้ว
+# สร้างกราฟที่ crashing แล้ว
 def DRAW2(df):
     G = nx.DiGraph()
     # ระบุโหนด critical path และ START, END
@@ -359,7 +365,7 @@ def DRAW2(df):
             for predecessor in predecessors:
                 G.add_edge(predecessor, activity, duration=duration)
 
-    # สร้าง dictionary dist
+      # สร้าง dictionary dist
     distance = 10
     dist = {}
     for u in G.nodes():
@@ -369,11 +375,16 @@ def DRAW2(df):
 
     #หาลำดับชั้นของโหนด
     sorted_nodes = list(nx.algorithms.dag.topological_sort(G))
-    # เพื่อจัดวางกราฟ
-    pos = nx.kamada_kawai_layout(G, dist=dist, scale=5)# เพิ่ม scale เพื่อขยายกราฟ
 
+
+
+    # จัดวางกราฟ
+    pos = nx.kamada_kawai_layout(G, dist=dist, scale=5)# เพิ่ม scale เพื่อขยายกราฟ
+    # วาดเส้นเชื่อมแบบโค้ง
     global node_positions  # อ้างอิงตัวแปร global
-    node_positions = pos  # เก็บค่าตำแหน่งของโหนด
+    pos = node_positions  # นำค่าตำแหน่งของโหนดมาใช้
+
+
 
     # สีโหนด
     node_colors =  ['red' if node in critical_path or node == 'END' else 'lightblue' for node in G.nodes()]
